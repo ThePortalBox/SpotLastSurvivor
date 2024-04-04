@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v3.3.0
 
       - name: Restore Packages
-        run: nuget restore
+        run: nuget restore SpotLastSurvivor
 
       - name: Get Build References
         shell: pwsh
@@ -39,13 +39,13 @@ jobs:
 
       - name: Build
         run: |
-          msbuild SpotLastSurvivor.csproj -t:rebuild -property:Configuration=Release -property:EXILED_REFERENCES="${{ env.EXILED_REFERENCES }}"
+          msbuild SpotLastSurvivor/SpotLastSurvivor.csproj -t:rebuild -property:Configuration=Release -property:EXILED_REFERENCES="${{ env.EXILED_REFERENCES }}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: SpotLastSurvivor
-          path: "bin/Release/SpotLastSurvivor.dll"
+          path: "SpotLastSurvivor/bin/Release/SpotLastSurvivor.dll"
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
