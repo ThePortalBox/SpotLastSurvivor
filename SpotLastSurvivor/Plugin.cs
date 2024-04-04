@@ -39,6 +39,10 @@ namespace SpotLastSurvivor
             if (list.Count != 1)
                 return;
 
+            if (!(Respawn.NextTeamTime.Minute > 0) && !(Respawn.NextTeamTime.Second > Config.ScanningTime))
+                return;
+                
+
             if (Config.CassieScan)
             {
                 Cassie.Message(Config.CassieAnnounce, true, true, true);
