@@ -32,29 +32,30 @@ namespace SpotLastSurvivor
         {
             PlayerEvents.Died -= OnPlayerDied;
             Plugin.instance = null;
+            Timing.KillCoroutines();
         }
         public void OnPlayerDied(DiedEventArgs ev)
         {
-            List<Player> list = Player.List.Where(x => !x.IsDead && !x.IsScp).ToList();
+            List<Player> list = Player.List.Where(x => !x.IsDead && !x.IsScp && !x.IsTutorial).ToList();
             if (list.Count != 1)
                 return;
-
-            if (!(Respawn.NextTeamTime.Minute > 0) && !(Respawn.NextTeamTime.Second > Config.ScanningTime))
+            Log.Debug("TotalMinutes: " +Respawn.TimeUntilSpawnWave.TotalMinutes);
+            Log.Debug("TotalSeconds: " + Respawn.TimeUntilSpawnWave.TotalSeconds);
+            if (!((Respawn.TimeUntilSpawnWave.TotalMinutes > 0.9) && (Respawn.TimeUntilSpawnWave.TotalSeconds > Config.ScanningTime)))
                 return;
                 
 
             if (Config.CassieScan)
             {
-                Cassie.Message(Config.CassieAnnounce, true, true, true);
+                Cassie.Message(Config.CassieAnnounce, true, false, true);
             }
 
             Timing.CallDelayed(Config.ScanningTime, () => {
-                list = Player.List.Where(x => !x.IsDead && !x.IsScp).ToList();
+                list = Player.List.Where(x => !x.IsDead && !x.IsScp && !x.IsTutorial).ToList();
                 if (list.Count == 1)
                 {
-                    Player ply = list.FirstOrDefault();
-
-                    Cassie.Message("SPOTTED AT " + ply.CurrentRoom, true, true, true);
+                    Player ply = list.FirstOrDefault();                   
+                    Cassie.Message("SPOTTED AT " + ply.CurrentRoom.Name, true, false, true);
                 }               
             });
         }
