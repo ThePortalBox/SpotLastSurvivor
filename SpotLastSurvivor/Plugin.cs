@@ -1,13 +1,11 @@
-﻿using System;
-using Exiled.API.Features;
-using PlayerEvents = Exiled.Events.Handlers.Player;
-using ServerEvents = Exiled.Events.Handlers.Server;
+﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using Exiled.CustomRoles.API.Features;
-using System.Linq;
-using Exiled.CustomRoles.API;
 using MEC;
+using PlayerRoles;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using PlayerEvents = Exiled.Events.Handlers.Player;
 
 namespace SpotLastSurvivor
 {
@@ -38,25 +36,31 @@ namespace SpotLastSurvivor
         {
             List<Player> list = Player.List.Where(x => !x.IsDead && !x.IsScp && !x.IsTutorial).ToList();
             if (list.Count != 1)
-                return;
-            Log.Debug("TotalMinutes: " +Respawn.TimeUntilSpawnWave.TotalMinutes);
+                return;           
             Log.Debug("TotalSeconds: " + Respawn.TimeUntilSpawnWave.TotalSeconds);
-            if (!((Respawn.TimeUntilSpawnWave.TotalMinutes > 0.9) && (Respawn.TimeUntilSpawnWave.TotalSeconds > Config.ScanningTime)))
+            if (Respawn.TimeUntilSpawnWave.TotalSeconds < Config.MTFTiming)
                 return;
                 
 
-            if (Config.CassieScan)
+            if (Config.CassieScanAnnounce)
             {
-                Cassie.Message(Config.CassieAnnounce, true, false, true);
+                Cassie.Message(Config.CassieAnnounceMessage, true, true, true);
             }
 
             Timing.CallDelayed(Config.ScanningTime, () => {
                 list = Player.List.Where(x => !x.IsDead && !x.IsScp && !x.IsTutorial).ToList();
                 if (list.Count == 1)
                 {
-                    Player ply = list.FirstOrDefault();                   
-                    Cassie.Message("SPOTTED AT " + ply.CurrentRoom.Name, true, false, true);
-                }               
+                    Player ply = list.FirstOrDefault();
+                    Log.Debug("Role: " + ply.Role.Name);
+                    Log.Debug("Team: " + ply.Role.Team);
+                    string roleName = ply.Role.Name;
+                    if (ply.Role.Team == Team.FoundationForces && ply.Role != RoleTypeId.FacilityGuard)
+                        roleName = "M T F";
+                    if (ply.Role.Team == Team.ChaosInsurgency)
+                        roleName = "ChaosInsurgency";
+                    Cassie.Message("SPOTTED AT " + ply.CurrentRoom.Name + " as " + roleName.Replace("-",""), true, true, true);
+                }
             });
         }
     }

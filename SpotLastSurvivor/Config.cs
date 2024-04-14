@@ -10,13 +10,16 @@ namespace SpotLastSurvivor
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; } = false;
 
-        [Description("Enable Cassie throwing an annonce of a scan when only one survivor remains")]
-        public bool CassieScan { get; set; } = true;
+        [Description("Enable Cassie throwing an annonce of a scan")]
+        public bool CassieScanAnnounce { get; set; } = true;
 
         [Description("Cassie scan message")]
-        public string CassieAnnounce { get; set; } = "SCANNING";
+        public string CassieAnnounceMessage { get; set; } = "SCANNING FOR LAST HUMAN";
 
         [Description("Time cassie take before telling where the last survivor is (seconds) after the scan")]
         public float ScanningTime { get; set; } = 30f;
+
+        [Description("Time before the respawn where no scan will be performed")]
+        public float MTFTiming { get; set; } = 90f;
     }
 }
