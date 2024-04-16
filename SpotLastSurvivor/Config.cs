@@ -20,6 +20,6 @@ namespace SpotLastSurvivor
         public float ScanningTime { get; set; } = 30f;
 
         [Description("Time before the respawn where no scan will be performed")]
-        public float MTFTiming { get; set; } = 90f;
+        public float RespawnTiming { get; set; } = 90f;
     }
 }

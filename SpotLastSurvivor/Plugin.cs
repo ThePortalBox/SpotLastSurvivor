@@ -38,7 +38,7 @@ namespace SpotLastSurvivor
             if (list.Count != 1)
                 return;           
             Log.Debug("TotalSeconds: " + Respawn.TimeUntilSpawnWave.TotalSeconds);
-            if (Respawn.TimeUntilSpawnWave.TotalSeconds < Config.MTFTiming)
+            if (Respawn.TimeUntilSpawnWave.TotalSeconds < Config.RespawnTiming)
                 return;
                 
 
