@@ -20,10 +20,13 @@ namespace SpotLastSurvivor
         public override string Prefix => "sls";
 
         public static Plugin instance;
+
+        public static bool Active = true;
+        
         public override void OnEnabled()
         {
             Plugin.instance = this;
-            PlayerEvents.Died += OnPlayerDied;
+            PlayerEvents.Died += OnPlayerDied;            
         }
 
         public override void OnDisabled()
@@ -39,8 +42,9 @@ namespace SpotLastSurvivor
                 return;           
             Log.Debug("TotalSeconds: " + Respawn.TimeUntilSpawnWave.TotalSeconds);
             if (Respawn.TimeUntilSpawnWave.TotalSeconds < Config.RespawnTiming)
-                return;
-                
+                return;            
+            if (!Plugin.Active)               
+                return;           
 
             if (Config.CassieScanAnnounce)
             {

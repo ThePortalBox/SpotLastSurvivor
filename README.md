@@ -40,3 +40,13 @@ You can install this plugin by downloading the [.dll](https://github.com/Antonio
 # Description
 
 When the second to last player dies cassie starts scanning the whole facility to find the last human survivor by default it takes 30 seconds and then make an announcement where the player is located.
+
+# Permission/Commands
+
+The permission you can give in the permission file:
+
+`- scan`
+
+Open your Remote Admin Console and write:
+
+``scan`` or  ``togglescan`` to activate or desactivate the scaning features
