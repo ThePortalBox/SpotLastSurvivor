@@ -16,7 +16,7 @@ namespace SpotLastSurvivor
     {
         public string Command => "togglescan";
 
-        public string[] Aliases => new[] {"scan"};
+        public string[] Aliases => new[] { "scan" };
 
         public string Description => "Activate or disactivate the scanning feature";
 
@@ -32,9 +32,10 @@ namespace SpotLastSurvivor
                 response = "You don't have the permission";
                 return false;
             }
+
             Plugin.Active = !Plugin.Active;
 
-            response = "Scanning is " + (Plugin.Active ? "Activated" : "Desactivated");
+            response = "Scanning is " + (Plugin.Active ? "Activated" : "Deactivated");
             return true;
         }
     }
