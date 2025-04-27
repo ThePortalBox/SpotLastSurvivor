@@ -14,7 +14,7 @@ namespace SpotLastSurvivor
         public bool CassieScanAnnounce { get; set; } = true;
 
         [Description("Cassie scan message")]
-        public string CassieAnnounceMessage { get; set; } = "SCANNING FOR LAST HUMAN";
+        public string CassieAnnounceMessage { get; set; } = "EVALUATING BREACH SEVERITY: SCANNING FOR SURVIVORS";
 
         [Description("Time cassie take before telling where the last survivor is (seconds) after the scan")]
         public float ScanningTime { get; set; } = 30f;
